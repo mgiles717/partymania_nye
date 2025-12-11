@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require("uuid");
+const { createTeam, addPlayerToTeam, removePlayerFromTeam, getTeam, teams } = require("../game/teams")
 
 // In-memory player store: playerId -> { socket }
 const players: Record<string, { socket: any }> = {};
@@ -10,8 +11,6 @@ const players: Record<string, { socket: any }> = {};
 function handleConnection(socket: any) {
   // Retrieve playerId from handshake (sent from client cookie) or generate new
   const playerId = socket.handshake.auth?.playerId || uuidv4();
-
-  // Store socket for this player
   players[playerId] = { socket };
 
   console.log("Player connected:", playerId, "(socket:", socket.id, ")");

@@ -16,7 +16,7 @@ const io = new Server(server, {
 // Pass each new socket to handleConnection
 io.on("connection", handleConnection);
 
-server.listen(3000, () => {
+server.listen(3000, "0.0.0.0", () => {
   console.log("Server running on http://localhost:3000");
 });
 

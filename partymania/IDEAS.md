@@ -7,6 +7,7 @@
 - 4 Users: 2 teams, 2 users per team. 1 Host, 1 Observer
 - Move from side A to finish of board
 - Engage in one minigame
+- Run the game from PC and on phone (Windows deployment probably, can do WSL if you want to redo command)
 
 ## Architecture
 - Host:
@@ -18,7 +19,10 @@
     - Distributing all responsibilities to the host player, drops large dependencies off of the system and onto the player to progress and move the game.
 - Observer (Main Screen):
     - Responsible for showing board and leaderboard
-    - 
+    - Will be an event screen for multiplayer minigames
+- Player (Mobile Users):
+    - Any player that is not on a team once the game starts, will be completely ignored
+    - Therefore, only players within the teams should allow to play, otherwise they could be defaulted to observer?? likely looks terrible on phone but this situation should never occur.
 
 ## Team Ideas
 - Choose name

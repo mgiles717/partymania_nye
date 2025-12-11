@@ -12,7 +12,7 @@ interface ClientToServerEvents {
 const playerId = getOrCreateUserId();
 
 export const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
-  io("http://localhost:3000", {
+  io("192.168.1.71:3000", {
     auth: { playerId }, // send it in the handshake
   });
 
