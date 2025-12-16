@@ -44,6 +44,7 @@
 - Random events sent to random players
     - e.g If you can get someone to say a specific word in normal conversation, win a point for your team
 - Special Items/Cards
-    - Sabotage (my personal favourite)
+    - Maybe card activation system on phone
+    - Sabotage (my personal favourite) : they won't know
         - When in a competitive game, screw over the opponent
-            - e.g 
+            - e.g max difficulty question without

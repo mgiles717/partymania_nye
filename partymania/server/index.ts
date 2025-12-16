@@ -1,9 +1,10 @@
-const express = require("express");
-const http = require("http");
-const { Server } = require("socket.io");
-const cors = require("cors");
+// server/index.ts
+import express from "express";
+import http from "http";
+import { Server } from "socket.io";
+import cors from "cors";
 
-const { handleConnection } = require("./sockets/connection");
+import { handleConnection } from "./sockets/connection.js"; // Note .js extension for Node ESM
 
 const app = express();
 app.use(cors());

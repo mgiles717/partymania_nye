@@ -11,7 +11,7 @@
 
 const teams: Record<string, string[]> = {};
 
-function createTeam(teamId: string, playerId: string) {
+export function createTeam(teamId: string, playerId: string) {
     if (!teams[teamId]) {
         teams[teamId] = [];
     }
@@ -19,29 +19,22 @@ function createTeam(teamId: string, playerId: string) {
     return teamId;
 }
 
-function addPlayerToTeam(playerId: string, teamId: string){
+export function addPlayerToTeam(playerId: string, teamId: string){
     removePlayerFromTeam(playerId);
     if (!teams[teamId]) teams[teamId] = [];
     teams[teamId].push(playerId);
 }
 
-function removePlayerFromTeam(playerId: string) {
+export function removePlayerFromTeam(playerId: string) {
     for (const t in teams) {
         if (!teams[t]) continue;
         teams[t] = teams[t].filter(id => id !== playerId)
     }
 }
 
-function getTeam(playerId: string){
+export function getTeam(playerId: string){
     for (const t in teams) {
         if (teams[t]?.includes(playerId)) return t;
     }
     return null;
 }
-
-module.exports = { teams, 
-    createTeam,
-    addPlayerToTeam,
-    removePlayerFromTeam,
-    getTeam
-};

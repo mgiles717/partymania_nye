@@ -1,20 +1,32 @@
-const { v4: uuidv4 } = require("uuid");
-const { createTeam, addPlayerToTeam, removePlayerFromTeam, getTeam, teams } = require("../game/teams")
+// server/sockets/connection.ts
+import { v4 as uuidv4 } from "uuid";
+import { User } from "../user/user.js";
 
 // In-memory player store: playerId -> { socket }
-const players: Record<string, { socket: any }> = {};
+export const users: Record<string, { user: User }> = {};
 
 /**
  * Handle a new Socket.IO connection
  * @param socket Socket.IO socket instance
  */
-function handleConnection(socket: any) {
+export function handleConnection(socket: any) {
   // Retrieve playerId from handshake (sent from client cookie) or generate new
   const playerId = socket.handshake.auth?.playerId || uuidv4();
-  players[playerId] = { socket };
+
+  // Try to fetch current user
+  let current_user = users[playerId]
+  // Create a new User object for the uuid if it does not exist
+  // and store in users
+  if (!current_user) {
+    console.log("Creating new user");
+    current_user = { user: new User() };
+    users[playerId] = current_user;
+  }
 
   console.log("Player connected:", playerId, "(socket:", socket.id, ")");
-  console.log("Total players:", Object.keys(players).length);
+  console.log("Total players:", Object.keys(users).length);
+  console.log("User Role:", users[playerId]?.user.getRole());
+  console.log("Username:", users[playerId]?.user.getUsername());
 
   // Notify this player
   socket.emit("welcome", { message: `Hello player ${playerId}` });
@@ -25,10 +37,16 @@ function handleConnection(socket: any) {
   // Handle disconnection
   socket.on("disconnect", () => {
     console.log("Player disconnected:", playerId);
-    delete players[playerId];
+    // delete users[playerId];
     socket.broadcast.emit("playerLeft", { playerId });
-    console.log("Total players:", Object.keys(players).length);
+    // console.log("Total players:", Object.keys(users).length);
   });
-}
 
-module.exports = { handleConnection, players };
+  socket.on("changeName", (data: any) => {
+    console.log("Received name:", data.text, playerId)
+    if(users[playerId]?.user){
+      users[playerId].user.setUsername(data.text); 
+    }
+  });
+
+}
