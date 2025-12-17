@@ -2,11 +2,12 @@ import { io, type Socket } from "socket.io-client";
 import { getOrCreateUserId } from "./user";
 
 interface ServerToClientEvents {
-  welcome: { message: string };
+  welcome: (data: { message: string }) => void;
 }
 
 interface ClientToServerEvents {
-  join: { playerId: string };
+  join: (data: { playerId: string }) => void;
+  changeName: (data: { text: string }) => void;
 }
 
 const playerId = getOrCreateUserId();

@@ -10,4 +10,4 @@
 
 <h1>Party Game</h1>
 <input bind:value={name} />
-<button on:click={sendTestMessage}>Send Test</button>
+<button onclick={sendTestMessage}>Send Test</button>

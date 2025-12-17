@@ -10,19 +10,29 @@
  */
 import type { Role } from "../roles/roles.js"
 import { Player, Host, Observer } from "../roles/index.js"
+import { type Socket } from "socket.io";
 
 export class User {
+    userId: string;
     role: Role;
     username: string;
+    socket: Socket;
+    teamName: string | null;
 
     constructor(
+        userId: string,
+        socket: Socket,
         role: Role = new Player(),
         username: string = "",
     ) {
-        this.role = role
-        this.username= username; 
+        this.userId = userId;
+        this.role = role;
+        this.username = username; 
+        this.socket = socket;
+        this.teamName = null;
     }
 
+    // Role
     getRole(){
         return this.role.getRoleType();
     }
@@ -31,6 +41,7 @@ export class User {
         this.role = role
     }
 
+    // Username
     getUsername(){
         return this.username;
     }
@@ -39,4 +50,22 @@ export class User {
         this.username = username;
     }
     
+    // Socket
+    getSocket(){
+        return this.socket;
+    }
+
+    setSocket(socket: Socket){
+        this.socket = socket;
+    }
+
+    // Team
+    getTeamName(){
+        return this.teamName
+    }
+
+
+    setTeamName(teamName: string | null){
+        this.teamName = teamName
+    }
 }
